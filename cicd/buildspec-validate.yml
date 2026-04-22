@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.12
+    commands:
+      - cd infra
+      - terraform version
+      - terraform init -backend=false
+  build:
+    commands:
+      - terraform fmt -check -recursive
+      - terraform validate
+artifacts:
+  files:
+    - '**/*'

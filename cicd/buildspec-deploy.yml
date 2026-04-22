@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.12
+    commands:
+      - cd infra
+      - terraform init -backend-config=backend.hcl
+  build:
+    commands:
+      - terraform plan -out=tfplan
+      - terraform apply -auto-approve tfplan
+  post_build:
+    commands:
+      - cd ..
+      - aws s3 sync airflow/dags "s3://${DAG_BUCKET}/dags/" --delete
+artifacts:
+  files:
+    - '**/*'
