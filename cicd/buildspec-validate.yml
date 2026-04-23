@@ -5,8 +5,12 @@ phases:
     runtime-versions:
       python: 3.12
     commands:
-      - cd infra
+      - apt-get update
+      - apt-get install -y unzip curl
+      - curl -fsSLo /tmp/terraform.zip https://releases.hashicorp.com/terraform/1.14.9/terraform_1.14.9_linux_amd64.zip
+      - unzip -o /tmp/terraform.zip -d /usr/local/bin
       - terraform version
+      - cd infra
       - terraform init -backend=false
   build:
     commands:
