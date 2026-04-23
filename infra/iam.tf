@@ -163,6 +163,7 @@ data "aws_iam_policy_document" "codebuild" {
       "s3:*",
       "codebuild:*",
       "codeconnections:UseConnection",
+
       "iam:PassRole",
       "iam:GetRole",
       "iam:CreateRole",
@@ -170,9 +171,23 @@ data "aws_iam_policy_document" "codebuild" {
       "iam:PutRolePolicy",
       "iam:CreatePolicy",
       "iam:CreateServiceLinkedRole",
+
+      "iam:GetPolicy",
+      "iam:GetPolicyVersion",
+      "iam:ListPolicyVersions",
+      "iam:ListRolePolicies",
+      "iam:ListAttachedRolePolicies",
+
       "ec2:*",
       "mwaa:*",
-      "cloudwatch:*"
+      "cloudwatch:*",
+
+      "sns:GetTopicAttributes",
+      "sns:ListTagsForResource",
+      "sns:TagResource",
+      "sns:UntagResource",
+      "sns:CreateTopic",
+      "sns:SetTopicAttributes"
     ]
     resources = ["*"]
   }
