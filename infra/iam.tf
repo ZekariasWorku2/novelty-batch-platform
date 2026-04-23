@@ -179,7 +179,7 @@ data "aws_iam_policy_document" "codebuild" {
       "iam:ListAttachedRolePolicies",
 
       "ec2:*",
-      "mwaa:*",
+      "airflow:*",
       "cloudwatch:*",
 
       "sns:GetTopicAttributes",
