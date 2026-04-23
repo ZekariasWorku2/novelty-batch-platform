@@ -11,6 +11,36 @@ resource "aws_codebuild_project" "validate" {
     image                       = "aws/codebuild/standard:8.0"
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
+
+    environment_variable {
+      name  = "TF_IN_AUTOMATION"
+      value = "true"
+      type  = "PLAINTEXT"
+    }
+
+    environment_variable {
+      name  = "TF_VAR_github_owner"
+      value = var.github_owner
+      type  = "PLAINTEXT"
+    }
+
+    environment_variable {
+      name  = "TF_VAR_github_repo"
+      value = var.github_repo
+      type  = "PLAINTEXT"
+    }
+
+    environment_variable {
+      name  = "TF_VAR_github_branch"
+      value = var.github_branch
+      type  = "PLAINTEXT"
+    }
+
+    environment_variable {
+      name  = "TF_VAR_codeconnection_arn"
+      value = var.codeconnection_arn
+      type  = "PLAINTEXT"
+    }
   }
 
   source {
@@ -48,6 +78,36 @@ resource "aws_codebuild_project" "deploy" {
     environment_variable {
       name  = "DAG_BUCKET"
       value = aws_s3_bucket.dags.bucket
+      type  = "PLAINTEXT"
+    }
+
+    environment_variable {
+      name  = "TF_IN_AUTOMATION"
+      value = "true"
+      type  = "PLAINTEXT"
+    }
+
+    environment_variable {
+      name  = "TF_VAR_github_owner"
+      value = var.github_owner
+      type  = "PLAINTEXT"
+    }
+
+    environment_variable {
+      name  = "TF_VAR_github_repo"
+      value = var.github_repo
+      type  = "PLAINTEXT"
+    }
+
+    environment_variable {
+      name  = "TF_VAR_github_branch"
+      value = var.github_branch
+      type  = "PLAINTEXT"
+    }
+
+    environment_variable {
+      name  = "TF_VAR_codeconnection_arn"
+      value = var.codeconnection_arn
       type  = "PLAINTEXT"
     }
   }

@@ -14,8 +14,8 @@ phases:
       - terraform init -backend-config=backend.hcl
   build:
     commands:
-      - terraform plan -out=tfplan
-      - terraform apply -auto-approve tfplan
+      - terraform plan -input=false -out=tfplan
+      - terraform apply -input=false -auto-approve tfplan
   post_build:
     commands:
       - cd ..
