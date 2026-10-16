@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.12
+  build:
+    commands:
+      - python -m py_compile airflow/dags/new_product_trend_weekly.py
+      - grep -q 'dag_id="new_product_trend_weekly"' airflow/dags/new_product_trend_weekly.py
+      - grep -q 'is_paused_upon_creation=True' airflow/dags/new_product_trend_weekly.py
+
+artifacts:
+  files:
+    - '**/*'
