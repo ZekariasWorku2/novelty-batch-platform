@@ -1,0 +1,10 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - aws s3 cp airflow/dags/new_product_trend_weekly.py "s3://novelty-margin-lakehouse-672350744457/mwaa/dags/new_product_trend_weekly.py"
+
+artifacts:
+  files:
+    - '**/*'
