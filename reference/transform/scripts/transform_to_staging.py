@@ -58,6 +58,7 @@ def read(table):
 
 inv = read("invoices").select(
     F.col("invoice_id").cast("long").alias("invoice_id"),
+    F.col("customer_id").cast("long").alias("customer_id"),
     F.to_date("invoice_date").alias("invoice_date"),
     F.coalesce(F.col("is_credit_note").cast("boolean"), F.lit(False)).alias("is_credit_note"),
 )
@@ -99,7 +100,7 @@ agg = (sales.groupBy("stock_item_id", "week_end")
        .agg(F.sum("quantity").cast("long").alias("units_sold_week"),
             F.sum(F.col("quantity") * F.col("unit_price")).alias("sales_amount_week"),
             F.sum("line_profit").alias("profit_week"),
-            F.countDistinct("invoice_id").cast("long").alias("distinct_customers_week")))
+            F.countDistinct("customer_id").cast("long").alias("distinct_customers_week")))
 # Zero-fill missing weeks only within the first 8-week period.
 # Do not generate unfinished future weeks.
 cutoff = end.toordinal()
