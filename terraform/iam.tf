@@ -1,7 +1,7 @@
 # Actual trust/inline/managed policy snapshots are versioned in recovered/iam_roles.json.
 # BEFORE enabling manage_existing_iam, import each pre-existing role and policy into state.
 resource "aws_iam_role" "recovered" {
-  for_each           = var.manage_existing_iam ? local.recovered_roles : {}
+  for_each           = { for k, v in local.recovered_roles : k => v if var.manage_existing_iam }
   name               = each.key
   assume_role_policy = jsonencode(each.value.assume_role_policy)
   lifecycle {
@@ -9,13 +9,13 @@ resource "aws_iam_role" "recovered" {
   }
 }
 resource "aws_iam_role_policy" "recovered" {
-  for_each = var.manage_existing_iam ? local.role_inline : {}
+  for_each = { for k, v in local.role_inline : k => v if var.manage_existing_iam }
   name     = each.value.name
   role     = aws_iam_role.recovered[each.value.role].id
   policy   = jsonencode(each.value.policy)
 }
 resource "aws_iam_role_policy_attachment" "recovered" {
-  for_each   = var.manage_existing_iam ? local.role_attachments : {}
+  for_each   = { for k, v in local.role_attachments : k => v if var.manage_existing_iam }
   role       = aws_iam_role.recovered[each.value.role].name
   policy_arn = each.value.arn
 }

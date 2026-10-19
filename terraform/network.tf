@@ -20,7 +20,7 @@ locals {
   }
 }
 resource "aws_subnet" "study" {
-  for_each                = var.manage_existing_network ? local.network_subnets : {}
+  for_each                = { for k, v in local.network_subnets : k => v if var.manage_existing_network }
   vpc_id                  = aws_vpc.study[0].id
   cidr_block              = each.value.cidr
   availability_zone       = each.value.az
@@ -57,12 +57,12 @@ resource "aws_route_table" "private" {
   }
 }
 resource "aws_route_table_association" "public" {
-  for_each       = var.manage_existing_network ? { for k,v in local.network_subnets : k=>v if v.public } : {}
+  for_each       = { for k,v in local.network_subnets : k => v if var.manage_existing_network && v.public }
   subnet_id      = aws_subnet.study[each.key].id
   route_table_id = aws_route_table.public[0].id
 }
 resource "aws_route_table_association" "private" {
-  for_each       = var.manage_existing_network ? { for k,v in local.network_subnets : k=>v if !v.public } : {}
+  for_each       = { for k,v in local.network_subnets : k => v if var.manage_existing_network && !v.public }
   subnet_id      = aws_subnet.study[each.key].id
   route_table_id = aws_route_table.private[0].id
 }

@@ -8,7 +8,7 @@ resource "aws_glue_catalog_database" "reference" {
   }
 }
 resource "aws_glue_catalog_table" "reference" {
-  for_each      = var.manage_catalog ? { for t in local.recovered_catalog.tables : t.Name => t } : {}
+  for_each      = { for t in local.recovered_catalog.tables : t.Name => t if var.manage_catalog }
   name          = each.value.Name
   database_name = aws_glue_catalog_database.reference[0].name
   table_type    = try(each.value.TableType, "EXTERNAL_TABLE")

@@ -1,7 +1,7 @@
 # Actual five job configurations are from AWS GetJob, not reconstructed from guesses.
 # All existing jobs must be IMPORTED before turning on manage_glue_jobs.
 resource "aws_glue_job" "pipeline" {
-  for_each          = var.manage_glue_jobs ? local.recovered_jobs : {}
+  for_each          = { for k, v in local.recovered_jobs : k => v if var.manage_glue_jobs }
   name              = each.key
   description       = each.value.Description
   role_arn          = each.key == "reference-raw-ingest" ? aws_iam_role.missing_glue["ReferenceRawIngestGlueRole"].arn : each.key == "reference-transform-to-staging" ? aws_iam_role.missing_glue["ReferenceTransformToStagingGlueRole"].arn : each.value.Role
