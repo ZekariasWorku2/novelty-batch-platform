@@ -1,0 +1,13 @@
+Rules = [
+  RowCount > 0,
+  IsComplete "StockItemID",
+  IsComplete "as_of_week_end_date",
+  IsComplete "weeks_since_launch",
+  IsComplete "units_sold_week",
+  IsComplete "sales_amount_week",
+  ColumnValues "weeks_since_launch" between 0 and 7,
+  ColumnValues "units_sold_week" >= 0,
+  ColumnValues "sales_amount_week" >= 0,
+  ColumnValues "profit_week" between -1000000 and 1000000,
+  ColumnValues "is_trending_8wk" in [0, 1, NULL]
+]

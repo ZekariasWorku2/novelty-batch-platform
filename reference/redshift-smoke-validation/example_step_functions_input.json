@@ -1,0 +1,8 @@
+{
+  "load_status": "SUCCEEDED",
+  "bucket": "novelty-margin-lakehouse-672350744457",
+  "processing_week_end": "2026-10-10",
+  "redshift_database": "dev",
+  "redshift_table": "public.trend_features",
+  "redshift_workgroup_name": "YOUR_REDSHIFT_SERVERLESS_WORKGROUP"
+}

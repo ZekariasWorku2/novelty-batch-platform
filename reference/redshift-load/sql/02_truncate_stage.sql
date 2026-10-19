@@ -1,0 +1,1 @@
+TRUNCATE TABLE product_trends.trend_features_load;

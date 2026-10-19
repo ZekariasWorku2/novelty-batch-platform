@@ -1,0 +1,7 @@
+{
+  "bucket": "novelty-margin-lakehouse-672350744457",
+  "processing_week_end": "2026-10-11",
+  "redshift_database": "analytics",
+  "redshift_workgroup_name": "reference-new-product-trend-wg",
+  "redshift_iam_role_arn": "arn:aws:iam::672350744457:role/ReferenceRedshiftCuratedLoadRole"
+}

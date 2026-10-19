@@ -1,0 +1,6 @@
+{
+  "raw_bucket": "novelty-margin-lakehouse-672350744457",
+  "processing_week_start": "2026-10-04",
+  "processing_week_end": "2026-10-11",
+  "manifest_key": "reference/raw-validation/config/example_ingestion_manifest.json"
+}

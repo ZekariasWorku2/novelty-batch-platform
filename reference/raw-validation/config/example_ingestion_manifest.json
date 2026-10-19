@@ -1,0 +1,54 @@
+{
+  "run_id": "EXAMPLE_20261004_001",
+  "processing_week_start": "2026-10-04",
+  "processing_week_end_exclusive": "2026-10-11",
+  "note": "Example only. In production the ingestion step writes this manifest after extracting from SQL Server.",
+  "tables": {
+    "invoice_lines": {
+      "prefix": "raw/wwi/invoice_lines/week_start=2026-10-04/",
+      "expected_files": [
+        "raw/wwi/invoice_lines/week_start=2026-10-04/part-00000.csv.gz"
+      ],
+      "source_row_count": 25000,
+      "source_schema": {
+        "invoice_line_id": "integer",
+        "invoice_id": "integer",
+        "invoice_date": "date",
+        "stock_item_id": "integer",
+        "quantity": "integer",
+        "unit_price": "decimal"
+      },
+      "daily_counts": {
+        "2026-10-04": 3500,
+        "2026-10-05": 3600,
+        "2026-10-06": 3550,
+        "2026-10-07": 3700,
+        "2026-10-08": 3450,
+        "2026-10-09": 3650,
+        "2026-10-10": 3550
+      }
+    },
+    "invoices": {
+      "prefix": "raw/wwi/invoices/week_start=2026-10-04/",
+      "expected_files": [
+        "raw/wwi/invoices/week_start=2026-10-04/part-00000.csv.gz"
+      ],
+      "source_row_count": 8200,
+      "source_schema": {
+        "invoice_id": "integer",
+        "customer_id": "integer",
+        "invoice_date": "date",
+        "is_credit_note": "boolean"
+      },
+      "daily_counts": {
+        "2026-10-04": 1150,
+        "2026-10-05": 1190,
+        "2026-10-06": 1160,
+        "2026-10-07": 1210,
+        "2026-10-08": 1140,
+        "2026-10-09": 1200,
+        "2026-10-10": 1150
+      }
+    }
+  }
+}

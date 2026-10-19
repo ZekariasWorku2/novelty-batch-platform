@@ -1,0 +1,98 @@
+{
+  "description": "Reference configuration for weekly raw-data validation. The ingestion manifest supplies expected files, source row counts, source schema, and daily source counts.",
+  "row_count_variance_pct": 40,
+  "recent_runs_to_compare": 4,
+  "tables": {
+    "invoice_lines": {
+      "required_columns": [
+        "invoice_line_id",
+        "invoice_id",
+        "invoice_date",
+        "stock_item_id",
+        "quantity",
+        "unit_price"
+      ],
+      "critical_keys": [
+        "invoice_line_id",
+        "invoice_id",
+        "stock_item_id"
+      ],
+      "date_column": "invoice_date"
+    },
+    "invoices": {
+      "required_columns": [
+        "invoice_id",
+        "customer_id",
+        "invoice_date",
+        "is_credit_note"
+      ],
+      "critical_keys": [
+        "invoice_id",
+        "customer_id"
+      ],
+      "date_column": "invoice_date"
+    },
+    "products": {
+      "required_columns": [
+        "stock_item_id",
+        "stock_item_name",
+        "supplier_id",
+        "unit_price"
+      ],
+      "critical_keys": [
+        "stock_item_id",
+        "supplier_id"
+      ],
+      "date_column": null
+    },
+    "product_categories": {
+      "required_columns": [
+        "stock_item_id",
+        "stock_group_id",
+        "stock_group_name"
+      ],
+      "critical_keys": [
+        "stock_item_id",
+        "stock_group_id"
+      ],
+      "date_column": null
+    },
+    "purchase_orders": {
+      "required_columns": [
+        "purchase_order_id",
+        "supplier_id",
+        "order_date"
+      ],
+      "critical_keys": [
+        "purchase_order_id",
+        "supplier_id"
+      ],
+      "date_column": "order_date"
+    },
+    "purchase_order_lines": {
+      "required_columns": [
+        "purchase_order_line_id",
+        "purchase_order_id",
+        "supplier_id",
+        "stock_item_id",
+        "order_date"
+      ],
+      "critical_keys": [
+        "purchase_order_line_id",
+        "purchase_order_id",
+        "stock_item_id"
+      ],
+      "date_column": "order_date"
+    },
+    "suppliers": {
+      "required_columns": [
+        "supplier_id",
+        "supplier_name"
+      ],
+      "critical_keys": [
+        "supplier_id"
+      ],
+      "date_column": null
+    }
+  }
+}

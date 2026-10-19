@@ -1,0 +1,6 @@
+{
+  "bucket": "novelty-margin-lakehouse-672350744457",
+  "staging_prefix": "staging/new_product_trend/features/as_of_year=2026/as_of_month=10/",
+  "curated_prefix": "curated/new_product_trend/features/as_of_year=2026/as_of_month=10/",
+  "processing_week_end": "2026-10-10"
+}
