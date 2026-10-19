@@ -1,0 +1,633 @@
+{
+  "NewProductTrendCodeBuildRole": {
+    "name": "NewProductTrendCodeBuildRole",
+    "assume_role_policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "codebuild.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": [
+      {
+        "name": "NewProductTrendCodeBuildInline",
+        "policy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Resource": "arn:aws:logs:us-east-1:*:*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetObject",
+                "s3:GetObjectVersion",
+                "s3:PutObject"
+              ],
+              "Resource": "arn:aws:s3:::novelty-margin-lakehouse-672350744457/*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetBucketLocation",
+                "s3:ListBucket"
+              ],
+              "Resource": "arn:aws:s3:::novelty-margin-lakehouse-672350744457"
+            }
+          ]
+        }
+      }
+    ],
+    "attached": []
+  },
+  "NewProductTrendCodePipelineRole": {
+    "name": "NewProductTrendCodePipelineRole",
+    "assume_role_policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "codepipeline.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": [
+      {
+        "name": "NewProductTrendCodePipelineInline",
+        "policy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": "codeconnections:UseConnection",
+              "Resource": "arn:aws:codeconnections:us-east-1:672350744457:connection/8690f980-f7a4-4aa6-b345-8f888ef008bc"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "codebuild:StartBuild",
+                "codebuild:BatchGetBuilds"
+              ],
+              "Resource": "arn:aws:codebuild:us-east-1:672350744457:project/new-product-trend-*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetObject",
+                "s3:GetObjectVersion",
+                "s3:PutObject",
+                "s3:GetBucketVersioning"
+              ],
+              "Resource": [
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457",
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457/*"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "attached": []
+  },
+  "NewProductTrendMWAAExecutionRole": {
+    "name": "NewProductTrendMWAAExecutionRole",
+    "assume_role_policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": [
+              "airflow-env.amazonaws.com",
+              "airflow.amazonaws.com"
+            ]
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": [],
+    "attached": [
+      "arn:aws:iam::672350744457:policy/NewProductTrendMWAAExecutionPolicy"
+    ]
+  },
+  "ReferenceRawValidationGlueRole": {
+    "name": "ReferenceRawValidationGlueRole",
+    "assume_role_policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "glue.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": [
+      {
+        "name": "ReferenceRawValidationS3Access",
+        "policy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetBucketLocation",
+                "s3:ListBucket"
+              ],
+              "Resource": [
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetObject",
+                "s3:PutObject"
+              ],
+              "Resource": [
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457/reference/raw-validation/*",
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457/raw/*",
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457/landing/*",
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457/logs/*"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "attached": [
+      "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
+    ]
+  },
+  "ReferenceStagedValidationGlueRole": {
+    "name": "ReferenceStagedValidationGlueRole",
+    "assume_role_policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "glue.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": [
+      {
+        "name": "ReferenceStagedValidationAccess",
+        "policy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+              ],
+              "Resource": [
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:DeleteObject"
+              ],
+              "Resource": [
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457/reference/staged-validation/*",
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457/staging/new_product_trend/*",
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457/curated/new_product_trend/*",
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457/landing/sqlserver/*"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "athena:StartQueryExecution",
+                "athena:GetQueryExecution",
+                "athena:GetQueryResults",
+                "athena:StopQueryExecution"
+              ],
+              "Resource": [
+                "*"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "glue:GetDataQualityRuleset",
+                "glue:GetTable",
+                "glue:GetTables",
+                "glue:GetDatabase",
+                "glue:GetDatabases",
+                "glue:GetPartitions"
+              ],
+              "Resource": [
+                "*"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "attached": [
+      "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
+    ]
+  },
+  "ReferenceRedshiftLoadGlueRole": {
+    "name": "ReferenceRedshiftLoadGlueRole",
+    "assume_role_policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "glue.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": [
+      {
+        "name": "ReferenceRedshiftLoadController",
+        "policy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetObject",
+                "s3:PutObject"
+              ],
+              "Resource": [
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457/reference/redshift-load/*"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "redshift-data:ExecuteStatement",
+                "redshift-data:DescribeStatement",
+                "redshift-data:GetStatementResult",
+                "redshift-data:CancelStatement"
+              ],
+              "Resource": "*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "redshift-serverless:GetCredentials"
+              ],
+              "Resource": "*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "iam:PassRole"
+              ],
+              "Resource": "arn:aws:iam::672350744457:role/ReferenceRedshiftCuratedLoadRole"
+            }
+          ]
+        }
+      }
+    ],
+    "attached": []
+  },
+  "ReferenceRedshiftSmokeValidationGlueRole": {
+    "name": "ReferenceRedshiftSmokeValidationGlueRole",
+    "assume_role_policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "glue.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": [
+      {
+        "name": "ReferenceRedshiftSmokeValidationAccess",
+        "policy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "redshift-data:ExecuteStatement",
+                "redshift-data:DescribeStatement",
+                "redshift-data:GetStatementResult",
+                "redshift-data:CancelStatement",
+                "redshift-serverless:GetCredentials"
+              ],
+              "Resource": [
+                "*"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "athena:StartQueryExecution",
+                "athena:GetQueryExecution",
+                "athena:GetQueryResults",
+                "athena:StopQueryExecution"
+              ],
+              "Resource": [
+                "*"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "glue:GetTable",
+                "glue:GetDatabase",
+                "glue:GetPartitions"
+              ],
+              "Resource": [
+                "*"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetBucketLocation",
+                "s3:ListBucket"
+              ],
+              "Resource": [
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetObject",
+                "s3:PutObject"
+              ],
+              "Resource": [
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457/reference/redshift-smoke-validation/*",
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457/curated/new_product_trend/*"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "attached": [
+      "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
+    ]
+  },
+  "ReferenceRedshiftCuratedLoadRole": {
+    "name": "ReferenceRedshiftCuratedLoadRole",
+    "assume_role_policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "redshift.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": [
+      {
+        "name": "ReferenceCuratedS3Read",
+        "policy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+              ],
+              "Resource": [
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetObject"
+              ],
+              "Resource": [
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457/curated/new_product_trend/features/*",
+                "arn:aws:s3:::novelty-margin-lakehouse-672350744457/reference/redshift-load/*"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "attached": []
+  },
+  "ReferenceRawValidationStepFunctionsRole": {
+    "name": "ReferenceRawValidationStepFunctionsRole",
+    "assume_role_policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "states.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": [
+      {
+        "name": "ReferenceRawValidationOrchestration",
+        "policy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "glue:StartJobRun",
+                "glue:GetJobRun",
+                "glue:GetJobRuns",
+                "glue:BatchStopJobRun"
+              ],
+              "Resource": [
+                "arn:aws:glue:us-east-1:672350744457:job/reference-raw-data-validation"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "sns:Publish"
+              ],
+              "Resource": [
+                "arn:aws:sns:us-east-1:672350744457:reference-raw-validation-failures"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "attached": []
+  },
+  "ReferenceStagedValidationStepFunctionsRole": {
+    "name": "ReferenceStagedValidationStepFunctionsRole",
+    "assume_role_policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "states.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": [
+      {
+        "name": "ReferenceStagedValidationOrchestration",
+        "policy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "glue:StartJobRun",
+                "glue:GetJobRun",
+                "glue:GetJobRuns",
+                "glue:BatchStopJobRun"
+              ],
+              "Resource": [
+                "arn:aws:glue:us-east-1:672350744457:job/reference-staged-data-validation",
+                "arn:aws:glue:us-east-1:672350744457:job/reference-promote-staged-data"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "sns:Publish"
+              ],
+              "Resource": [
+                "arn:aws:sns:us-east-1:672350744457:reference-staged-validation-failures"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "attached": []
+  },
+  "ReferenceRedshiftPublishStepFunctionsRole": {
+    "name": "ReferenceRedshiftPublishStepFunctionsRole",
+    "assume_role_policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "states.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": [
+      {
+        "name": "ReferenceRedshiftPublishOrchestration",
+        "policy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "glue:StartJobRun",
+                "glue:GetJobRun",
+                "glue:GetJobRuns",
+                "glue:BatchStopJobRun"
+              ],
+              "Resource": "*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "sns:Publish"
+              ],
+              "Resource": "arn:aws:sns:us-east-1:672350744457:reference-redshift-smoke-validation-failures"
+            }
+          ]
+        }
+      }
+    ],
+    "attached": []
+  },
+  "ReferenceRedshiftSmokeValidationStepFunctionsRole": {
+    "name": "ReferenceRedshiftSmokeValidationStepFunctionsRole",
+    "assume_role_policy": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "states.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "inline": [
+      {
+        "name": "ReferenceRedshiftSmokeValidationOrchestration",
+        "policy": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "glue:StartJobRun",
+                "glue:GetJobRun",
+                "glue:GetJobRuns",
+                "glue:BatchStopJobRun"
+              ],
+              "Resource": [
+                "arn:aws:glue:us-east-1:672350744457:job/reference-redshift-postload-smoke-validation"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "sns:Publish"
+              ],
+              "Resource": [
+                "arn:aws:sns:us-east-1:672350744457:reference-redshift-smoke-validation-failures"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "attached": []
+  }
+}
