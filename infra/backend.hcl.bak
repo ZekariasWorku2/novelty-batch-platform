@@ -1,5 +1,0 @@
-bucket       = "REPLACE_ME_TFSTATE_BUCKET"
-key          = "envs/dev/terraform.tfstate"
-region       = "us-east-1"
-encrypt      = true
-use_lockfile = true
