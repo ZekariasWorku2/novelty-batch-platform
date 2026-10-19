@@ -1,0 +1,11 @@
+version: 0.2
+phases:
+  build:
+    commands:
+      - 'test "${ALLOW_PIPELINE_DEPLOY:-false}" = "true" || { echo "Code deploy disabled"; exit 1; }'
+      - python scripts/validate_repository.py
+      - aws s3 cp airflow/dags/new_product_trend_weekly.py "s3://${LAKE_BUCKET}/mwaa/dags/new_product_trend_weekly.py"
+      - aws s3 sync reference/ "s3://${LAKE_BUCKET}/reference/" --exclude "*.txt" --exclude "example_*" --exclude "**/__pycache__/*"
+artifacts:
+  files:
+    - "**/*"

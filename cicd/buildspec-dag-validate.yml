@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.12
+  build:
+    commands:
+      - python -m compileall -q airflow reference tests
+      - python -m unittest discover -s tests -v
+      - python scripts/validate_repository.py
+      - echo "Static validation passed; this job does not modify AWS."
+artifacts:
+  files:
+    - "**/*"

@@ -1,0 +1,33 @@
+name: Source and Terraform validation
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile all Python source
+        run: python -m compileall -q airflow reference tests
+      - name: Run repository validation
+        run: python scripts/validate_repository.py
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+  terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.14.9"
+      - run: terraform init -backend=false -input=false
+      - run: terraform validate -no-color
+      - name: Check formatting
+        run: terraform fmt -check -recursive -diff

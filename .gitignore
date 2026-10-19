@@ -1,18 +1,16 @@
-# macOS
-.DS_Store
-
-# Terraform
-**/.terraform/*
-*.tfplan
-tfplan
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.env
+.env.*
+!.env.example
+**/.terraform/
 *.tfstate
 *.tfstate.*
-crash.log
-override.tf
-override.tf.json
-*_override.tf
-*_override.tf.json
-
-# Local variable files
+*.tfplan
 *.tfvars
+!*.tfvars.example
+**/backend.hcl
 *.tfvars.json
+.DS_Store
