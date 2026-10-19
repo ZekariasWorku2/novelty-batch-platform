@@ -1,0 +1,154 @@
+{
+  "jobs": [
+    {
+      "Name": "reference-raw-data-validation",
+      "Description": "Idle reference job: validates landed raw S3 data before transformation.",
+      "Role": "arn:aws:iam::672350744457:role/ReferenceRawValidationGlueRole",
+      "Command": {
+        "Name": "glueetl",
+        "ScriptLocation": "s3://novelty-margin-lakehouse-672350744457/reference/raw-validation/scripts/raw_validation.py",
+        "PythonVersion": "3"
+      },
+      "DefaultArguments": {
+        "--config_key": "reference/raw-validation/config/expected_validation_config.json",
+        "--enable-metrics": "true",
+        "--job-language": "python",
+        "--audit_prefix": "reference/raw-validation/audit/",
+        "--enable-continuous-cloudwatch-log": "true"
+      },
+      "GlueVersion": "5.0",
+      "WorkerType": "G.1X",
+      "NumberOfWorkers": 2,
+      "MaxCapacity": 2,
+      "Timeout": 10,
+      "MaxRetries": 0
+    },
+    {
+      "Name": "reference-staged-data-validation",
+      "Description": "Idle reference job for comprehensive validation of staged trend_features.",
+      "Role": "arn:aws:iam::672350744457:role/ReferenceStagedValidationGlueRole",
+      "Command": {
+        "Name": "glueetl",
+        "ScriptLocation": "s3://novelty-margin-lakehouse-672350744457/reference/staged-validation/scripts/staged_validation.py",
+        "PythonVersion": "3"
+      },
+      "DefaultArguments": {
+        "--config_key": "reference/staged-validation/config/staged_validation_config.json",
+        "--sql_prefix": "reference/staged-validation/sql/",
+        "--dq_ruleset_name": "staged_trend_features_structural_rules",
+        "--enable-continuous-cloudwatch-log": "true",
+        "--athena_workgroup": "reference-staged-validation",
+        "--job-language": "python",
+        "--athena_database": "reference_new_product_trend",
+        "--audit_prefix": "reference/staged-validation/audit/"
+      },
+      "GlueVersion": "5.0",
+      "WorkerType": "G.1X",
+      "NumberOfWorkers": 2,
+      "MaxCapacity": 2,
+      "Timeout": 10,
+      "MaxRetries": 0
+    },
+    {
+      "Name": "reference-promote-staged-data",
+      "Description": "Idle reference promotion job. Runs only after staged validation passes.",
+      "Role": "arn:aws:iam::672350744457:role/ReferenceStagedValidationGlueRole",
+      "Command": {
+        "Name": "glueetl",
+        "ScriptLocation": "s3://novelty-margin-lakehouse-672350744457/reference/staged-validation/scripts/promote_staged_to_curated.py",
+        "PythonVersion": "3"
+      },
+      "DefaultArguments": {
+        "--job-language": "python",
+        "--enable-continuous-cloudwatch-log": "true"
+      },
+      "GlueVersion": "5.0",
+      "WorkerType": "G.1X",
+      "NumberOfWorkers": 2,
+      "MaxCapacity": 2,
+      "Timeout": 10,
+      "MaxRetries": 0
+    },
+    {
+      "Name": "reference-curated-to-redshift-load",
+      "Description": "Idle reference job: COPY validated curated Parquet to Redshift staging and publish processing week.",
+      "Role": "arn:aws:iam::672350744457:role/ReferenceRedshiftLoadGlueRole",
+      "Command": {
+        "Name": "pythonshell",
+        "ScriptLocation": "s3://novelty-margin-lakehouse-672350744457/reference/redshift-load/scripts/curated_to_redshift_load.py",
+        "PythonVersion": "3.9"
+      },
+      "DefaultArguments": {},
+      "GlueVersion": "6.0",
+      "MaxCapacity": 0.0625,
+      "Timeout": 10,
+      "MaxRetries": 0
+    },
+    {
+      "Name": "reference-redshift-postload-smoke-validation",
+      "Description": "Idle reference job for Redshift post-load smoke validation using Data API and Athena.",
+      "Role": "arn:aws:iam::672350744457:role/ReferenceRedshiftSmokeValidationGlueRole",
+      "Command": {
+        "Name": "pythonshell",
+        "ScriptLocation": "s3://novelty-margin-lakehouse-672350744457/reference/redshift-smoke-validation/scripts/redshift_postload_smoke_validation.py",
+        "PythonVersion": "3.9"
+      },
+      "DefaultArguments": {
+        "--athena_workgroup": "reference-redshift-smoke-validation",
+        "--curated_table": "curated_trend_features_reference",
+        "--athena_database": "reference_new_product_trend",
+        "--audit_prefix": "reference/redshift-smoke-validation/audit/"
+      },
+      "GlueVersion": "6.0",
+      "MaxCapacity": 0.0625,
+      "Timeout": 10,
+      "MaxRetries": 0
+    },
+    {
+      "Name": "reference-raw-ingest",
+      "Description": "NEW: SQL Server weekly extraction to raw S3 and source-to-raw manifest; credentials supplied separately.",
+      "Role": "arn:aws:iam::672350744457:role/ReferenceRawIngestGlueRole",
+      "Command": {
+        "Name": "glueetl",
+        "ScriptLocation": "s3://novelty-margin-lakehouse-672350744457/reference/raw-ingest/scripts/raw_ingest.py",
+        "PythonVersion": "3"
+      },
+      "DefaultArguments": {
+        "--job-language": "python",
+        "--enable-continuous-cloudwatch-log": "true",
+        "--source_tables_key": "reference/raw-ingest/config/source_tables.json"
+      },
+      "GlueVersion": "5.0",
+      "WorkerType": "G.1X",
+      "NumberOfWorkers": 2,
+      "Timeout": 60,
+      "MaxRetries": 0,
+      "Connections": {
+        "Connections": [
+          "reference-sqlserver-source"
+        ]
+      }
+    },
+    {
+      "Name": "reference-transform-to-staging",
+      "Description": "NEW: Build weekly feature mart Parquet; must validate against full source history before deployment.",
+      "Role": "arn:aws:iam::672350744457:role/ReferenceTransformToStagingGlueRole",
+      "Command": {
+        "Name": "glueetl",
+        "ScriptLocation": "s3://novelty-margin-lakehouse-672350744457/reference/transform/scripts/transform_to_staging.py",
+        "PythonVersion": "3"
+      },
+      "DefaultArguments": {
+        "--job-language": "python",
+        "--enable-continuous-cloudwatch-log": "true",
+        "--threshold_key": "reference/staged-validation/config/trend_thresholds/trend_thresholds.csv"
+      },
+      "GlueVersion": "5.0",
+      "WorkerType": "G.1X",
+      "NumberOfWorkers": 2,
+      "Timeout": 60,
+      "MaxRetries": 0
+    }
+  ],
+  "origin": "Five recovered AWS GetJob definitions; two explicitly generated replacements; new entries are assumptions and require integration tests."
+}
