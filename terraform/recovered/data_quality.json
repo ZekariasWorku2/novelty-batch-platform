@@ -1,0 +1,11 @@
+{
+  "Name": "staged_trend_features_structural_rules",
+  "Description": "Reference structural/null/range checks for staged trend_features.",
+  "Ruleset": "Rules = [\n  RowCount > 0,\n  IsComplete \"StockItemID\",\n  IsComplete \"as_of_week_end_date\",\n  IsComplete \"weeks_since_launch\",\n  IsComplete \"units_sold_week\",\n  IsComplete \"sales_amount_week\",\n  ColumnValues \"weeks_since_launch\" between 0 and 7,\n  ColumnValues \"units_sold_week\" >= 0,\n  ColumnValues \"sales_amount_week\" >= 0,\n  ColumnValues \"profit_week\" between -1000000 and 1000000,\n  ColumnValues \"is_trending_8wk\" in [0, 1, NULL]\n]",
+  "TargetTable": {
+    "TableName": "staged_trend_features_reference",
+    "DatabaseName": "reference_new_product_trend"
+  },
+  "CreatedOn": "2026-10-13T10:16:02.692000+00:00",
+  "LastModifiedOn": "2026-10-13T10:16:02.692000+00:00"
+}

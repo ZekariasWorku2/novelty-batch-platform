@@ -1,0 +1,48 @@
+{
+  "reference-staged-validation": {
+    "Name": "reference-staged-validation",
+    "State": "ENABLED",
+    "Configuration": {
+      "ResultConfiguration": {
+        "OutputLocation": "s3://novelty-margin-lakehouse-672350744457/reference/staged-validation/athena-results/",
+        "EncryptionConfiguration": {
+          "EncryptionOption": "SSE_S3"
+        }
+      },
+      "EnforceWorkGroupConfiguration": true,
+      "PublishCloudWatchMetricsEnabled": true,
+      "BytesScannedCutoffPerQuery": 1073741824,
+      "RequesterPaysEnabled": false,
+      "EngineVersion": {
+        "SelectedEngineVersion": "AUTO",
+        "EffectiveEngineVersion": "Athena engine version 3"
+      },
+      "EnableMinimumEncryptionConfiguration": false
+    },
+    "Description": "Idle reference Athena workgroup for staged validation.",
+    "CreationTime": "2026-10-13T10:16:03.180000+00:00"
+  },
+  "reference-redshift-smoke-validation": {
+    "Name": "reference-redshift-smoke-validation",
+    "State": "ENABLED",
+    "Configuration": {
+      "ResultConfiguration": {
+        "OutputLocation": "s3://novelty-margin-lakehouse-672350744457/reference/redshift-smoke-validation/athena-results/",
+        "EncryptionConfiguration": {
+          "EncryptionOption": "SSE_S3"
+        }
+      },
+      "EnforceWorkGroupConfiguration": true,
+      "PublishCloudWatchMetricsEnabled": true,
+      "BytesScannedCutoffPerQuery": 1073741824,
+      "RequesterPaysEnabled": false,
+      "EngineVersion": {
+        "SelectedEngineVersion": "AUTO",
+        "EffectiveEngineVersion": "Athena engine version 3"
+      },
+      "EnableMinimumEncryptionConfiguration": false
+    },
+    "Description": "Idle reference workgroup for curated baseline metrics used by Redshift smoke validation.",
+    "CreationTime": "2026-10-13T11:04:23.702000+00:00"
+  }
+}

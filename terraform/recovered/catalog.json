@@ -1,0 +1,616 @@
+{
+  "databases": [
+    {
+      "Name": "bronze",
+      "Description": "Novelty margin bronze Iceberg namespace",
+      "LocationUri": "s3://novelty-margin-lakehouse-672350744457/iceberg/bronze/",
+      "CreateTime": "2026-07-23T09:39:45+00:00",
+      "CreateTableDefaultPermissions": [
+        {
+          "Principal": {
+            "DataLakePrincipalIdentifier": "IAM_ALLOWED_PRINCIPALS"
+          },
+          "Permissions": [
+            "ALL"
+          ]
+        }
+      ],
+      "CatalogId": "672350744457"
+    },
+    {
+      "Name": "gold",
+      "Description": "Novelty margin gold Iceberg namespace",
+      "LocationUri": "s3://novelty-margin-lakehouse-672350744457/iceberg/gold/",
+      "CreateTime": "2026-07-23T09:39:52+00:00",
+      "CreateTableDefaultPermissions": [
+        {
+          "Principal": {
+            "DataLakePrincipalIdentifier": "IAM_ALLOWED_PRINCIPALS"
+          },
+          "Permissions": [
+            "ALL"
+          ]
+        }
+      ],
+      "CatalogId": "672350744457"
+    },
+    {
+      "Name": "reference_new_product_trend",
+      "Description": "Reference catalog for staged new-product-trend validation.",
+      "CreateTime": "2026-10-13T10:16:01+00:00",
+      "CreateTableDefaultPermissions": [
+        {
+          "Principal": {
+            "DataLakePrincipalIdentifier": "IAM_ALLOWED_PRINCIPALS"
+          },
+          "Permissions": [
+            "ALL"
+          ]
+        }
+      ],
+      "CatalogId": "672350744457"
+    },
+    {
+      "Name": "silver",
+      "Description": "Novelty margin silver Iceberg namespace",
+      "LocationUri": "s3://novelty-margin-lakehouse-672350744457/iceberg/silver/",
+      "CreateTime": "2026-07-23T09:39:49+00:00",
+      "CreateTableDefaultPermissions": [
+        {
+          "Principal": {
+            "DataLakePrincipalIdentifier": "IAM_ALLOWED_PRINCIPALS"
+          },
+          "Permissions": [
+            "ALL"
+          ]
+        }
+      ],
+      "CatalogId": "672350744457"
+    }
+  ],
+  "tables": [
+    {
+      "Name": "curated_trend_features_reference",
+      "DatabaseName": "reference_new_product_trend",
+      "Description": "Reference external table over trusted curated trend_features Parquet for Redshift smoke-validation baselines.",
+      "CreateTime": "2026-10-13T11:04:23+00:00",
+      "UpdateTime": "2026-10-13T11:04:23+00:00",
+      "Retention": 0,
+      "StorageDescriptor": {
+        "Columns": [
+          {
+            "Name": "stockitemid",
+            "Type": "bigint"
+          },
+          {
+            "Name": "stockitemname",
+            "Type": "string"
+          },
+          {
+            "Name": "supplierid",
+            "Type": "bigint"
+          },
+          {
+            "Name": "brand",
+            "Type": "string"
+          },
+          {
+            "Name": "size",
+            "Type": "string"
+          },
+          {
+            "Name": "leadtimedays",
+            "Type": "int"
+          },
+          {
+            "Name": "quantityperouter",
+            "Type": "int"
+          },
+          {
+            "Name": "ischillerstock",
+            "Type": "boolean"
+          },
+          {
+            "Name": "baseunitprice",
+            "Type": "double"
+          },
+          {
+            "Name": "recommendedretailprice",
+            "Type": "double"
+          },
+          {
+            "Name": "primarystockgroupname",
+            "Type": "string"
+          },
+          {
+            "Name": "quantityonhand",
+            "Type": "int"
+          },
+          {
+            "Name": "reorderlevel",
+            "Type": "int"
+          },
+          {
+            "Name": "targetstocklevel",
+            "Type": "int"
+          },
+          {
+            "Name": "launch_date",
+            "Type": "date"
+          },
+          {
+            "Name": "launch_quarter",
+            "Type": "string"
+          },
+          {
+            "Name": "as_of_week_end_date",
+            "Type": "date"
+          },
+          {
+            "Name": "weeks_since_launch",
+            "Type": "int"
+          },
+          {
+            "Name": "units_sold_week",
+            "Type": "bigint"
+          },
+          {
+            "Name": "sales_amount_week",
+            "Type": "double"
+          },
+          {
+            "Name": "profit_week",
+            "Type": "double"
+          },
+          {
+            "Name": "distinct_customers_week",
+            "Type": "bigint"
+          },
+          {
+            "Name": "avg_unit_price_week",
+            "Type": "double"
+          },
+          {
+            "Name": "cumulative_units_to_date",
+            "Type": "bigint"
+          },
+          {
+            "Name": "cumulative_sales_to_date",
+            "Type": "double"
+          },
+          {
+            "Name": "cumulative_customers_proxy",
+            "Type": "bigint"
+          },
+          {
+            "Name": "prev_week_units",
+            "Type": "bigint"
+          },
+          {
+            "Name": "prev_week_sales",
+            "Type": "double"
+          },
+          {
+            "Name": "wow_units_growth_rate",
+            "Type": "double"
+          },
+          {
+            "Name": "first_8wk_units",
+            "Type": "bigint"
+          },
+          {
+            "Name": "first_8wk_sales",
+            "Type": "double"
+          },
+          {
+            "Name": "first_8wk_customers",
+            "Type": "bigint"
+          },
+          {
+            "Name": "is_trending_8wk",
+            "Type": "int"
+          }
+        ],
+        "Location": "s3://novelty-margin-lakehouse-672350744457/curated/new_product_trend/features/",
+        "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+        "OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+        "Compressed": false,
+        "NumberOfBuckets": 0,
+        "SerdeInfo": {
+          "SerializationLibrary": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"
+        },
+        "SortColumns": [],
+        "StoredAsSubDirectories": false
+      },
+      "PartitionKeys": [
+        {
+          "Name": "as_of_year",
+          "Type": "int"
+        },
+        {
+          "Name": "as_of_month",
+          "Type": "int"
+        }
+      ],
+      "TableType": "EXTERNAL_TABLE",
+      "Parameters": {
+        "projection.as_of_year.type": "integer",
+        "EXTERNAL": "TRUE",
+        "projection.as_of_month.range": "1,12",
+        "projection.as_of_year.range": "2015,2035",
+        "projection.as_of_month.type": "integer",
+        "classification": "parquet",
+        "projection.enabled": "true",
+        "storage.location.template": "s3://novelty-margin-lakehouse-672350744457/curated/new_product_trend/features/as_of_year=${as_of_year}/as_of_month=${as_of_month}/"
+      },
+      "CreatedBy": "arn:aws:iam::672350744457:root",
+      "IsRegisteredWithLakeFormation": false,
+      "CatalogId": "672350744457",
+      "VersionId": "0",
+      "IsMultiDialectView": false,
+      "IsMaterializedView": false
+    },
+    {
+      "Name": "raw_invoice_lines_reference",
+      "DatabaseName": "reference_new_product_trend",
+      "Description": "Reference external table over landed SQL Server invoice_lines TSV for source reconciliation examples.",
+      "CreateTime": "2026-10-13T10:25:54+00:00",
+      "UpdateTime": "2026-10-13T10:25:54+00:00",
+      "Retention": 0,
+      "StorageDescriptor": {
+        "Columns": [
+          {
+            "Name": "invoice_line_id",
+            "Type": "bigint"
+          },
+          {
+            "Name": "invoice_id",
+            "Type": "bigint"
+          },
+          {
+            "Name": "invoice_date",
+            "Type": "date"
+          },
+          {
+            "Name": "stock_item_id",
+            "Type": "bigint"
+          },
+          {
+            "Name": "quantity",
+            "Type": "int"
+          },
+          {
+            "Name": "unit_price",
+            "Type": "double"
+          },
+          {
+            "Name": "tax_rate",
+            "Type": "double"
+          },
+          {
+            "Name": "tax_amount",
+            "Type": "double"
+          },
+          {
+            "Name": "line_profit",
+            "Type": "double"
+          },
+          {
+            "Name": "extended_price",
+            "Type": "double"
+          },
+          {
+            "Name": "last_edited_when",
+            "Type": "timestamp"
+          }
+        ],
+        "Location": "s3://novelty-margin-lakehouse-672350744457/landing/sqlserver/invoice_lines/",
+        "InputFormat": "org.apache.hadoop.mapred.TextInputFormat",
+        "OutputFormat": "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
+        "Compressed": false,
+        "NumberOfBuckets": 0,
+        "SerdeInfo": {
+          "SerializationLibrary": "org.apache.hadoop.hive.serde2.OpenCSVSerde",
+          "Parameters": {
+            "separatorChar": "\t",
+            "quoteChar": "\"",
+            "escapeChar": "\\"
+          }
+        },
+        "SortColumns": [],
+        "StoredAsSubDirectories": false
+      },
+      "TableType": "EXTERNAL_TABLE",
+      "Parameters": {
+        "EXTERNAL": "TRUE",
+        "classification": "csv",
+        "skip.header.line.count": "1"
+      },
+      "CreatedBy": "arn:aws:iam::672350744457:root",
+      "IsRegisteredWithLakeFormation": false,
+      "CatalogId": "672350744457",
+      "VersionId": "0",
+      "IsMultiDialectView": false,
+      "IsMaterializedView": false
+    },
+    {
+      "Name": "raw_invoices_reference",
+      "DatabaseName": "reference_new_product_trend",
+      "Description": "Reference external table over landed SQL Server invoices TSV for source reconciliation examples.",
+      "CreateTime": "2026-10-13T10:25:54+00:00",
+      "UpdateTime": "2026-10-13T10:25:54+00:00",
+      "Retention": 0,
+      "StorageDescriptor": {
+        "Columns": [
+          {
+            "Name": "invoice_id",
+            "Type": "bigint"
+          },
+          {
+            "Name": "customer_id",
+            "Type": "bigint"
+          },
+          {
+            "Name": "bill_to_customer_id",
+            "Type": "bigint"
+          },
+          {
+            "Name": "order_id",
+            "Type": "bigint"
+          },
+          {
+            "Name": "invoice_date",
+            "Type": "date"
+          },
+          {
+            "Name": "is_credit_note",
+            "Type": "boolean"
+          },
+          {
+            "Name": "last_edited_when",
+            "Type": "timestamp"
+          }
+        ],
+        "Location": "s3://novelty-margin-lakehouse-672350744457/landing/sqlserver/invoices/",
+        "InputFormat": "org.apache.hadoop.mapred.TextInputFormat",
+        "OutputFormat": "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
+        "Compressed": false,
+        "NumberOfBuckets": 0,
+        "SerdeInfo": {
+          "SerializationLibrary": "org.apache.hadoop.hive.serde2.OpenCSVSerde",
+          "Parameters": {
+            "separatorChar": "\t",
+            "quoteChar": "\"",
+            "escapeChar": "\\"
+          }
+        },
+        "SortColumns": [],
+        "StoredAsSubDirectories": false
+      },
+      "TableType": "EXTERNAL_TABLE",
+      "Parameters": {
+        "EXTERNAL": "TRUE",
+        "classification": "csv",
+        "skip.header.line.count": "1"
+      },
+      "CreatedBy": "arn:aws:iam::672350744457:root",
+      "IsRegisteredWithLakeFormation": false,
+      "CatalogId": "672350744457",
+      "VersionId": "0",
+      "IsMultiDialectView": false,
+      "IsMaterializedView": false
+    },
+    {
+      "Name": "staged_trend_features_reference",
+      "DatabaseName": "reference_new_product_trend",
+      "Description": "Reference external table over staged trend_features Parquet.",
+      "CreateTime": "2026-10-13T10:16:02+00:00",
+      "UpdateTime": "2026-10-13T10:16:02+00:00",
+      "Retention": 0,
+      "StorageDescriptor": {
+        "Columns": [
+          {
+            "Name": "stockitemid",
+            "Type": "bigint"
+          },
+          {
+            "Name": "stockitemname",
+            "Type": "string"
+          },
+          {
+            "Name": "supplierid",
+            "Type": "bigint"
+          },
+          {
+            "Name": "brand",
+            "Type": "string"
+          },
+          {
+            "Name": "size",
+            "Type": "string"
+          },
+          {
+            "Name": "leadtimedays",
+            "Type": "int"
+          },
+          {
+            "Name": "quantityperouter",
+            "Type": "int"
+          },
+          {
+            "Name": "ischillerstock",
+            "Type": "boolean"
+          },
+          {
+            "Name": "baseunitprice",
+            "Type": "double"
+          },
+          {
+            "Name": "recommendedretailprice",
+            "Type": "double"
+          },
+          {
+            "Name": "primarystockgroupname",
+            "Type": "string"
+          },
+          {
+            "Name": "quantityonhand",
+            "Type": "int"
+          },
+          {
+            "Name": "reorderlevel",
+            "Type": "int"
+          },
+          {
+            "Name": "targetstocklevel",
+            "Type": "int"
+          },
+          {
+            "Name": "launch_date",
+            "Type": "date"
+          },
+          {
+            "Name": "launch_quarter",
+            "Type": "string"
+          },
+          {
+            "Name": "as_of_week_end_date",
+            "Type": "date"
+          },
+          {
+            "Name": "weeks_since_launch",
+            "Type": "int"
+          },
+          {
+            "Name": "units_sold_week",
+            "Type": "bigint"
+          },
+          {
+            "Name": "sales_amount_week",
+            "Type": "double"
+          },
+          {
+            "Name": "profit_week",
+            "Type": "double"
+          },
+          {
+            "Name": "distinct_customers_week",
+            "Type": "bigint"
+          },
+          {
+            "Name": "avg_unit_price_week",
+            "Type": "double"
+          },
+          {
+            "Name": "cumulative_units_to_date",
+            "Type": "bigint"
+          },
+          {
+            "Name": "cumulative_sales_to_date",
+            "Type": "double"
+          },
+          {
+            "Name": "cumulative_customers_proxy",
+            "Type": "bigint"
+          },
+          {
+            "Name": "prev_week_units",
+            "Type": "bigint"
+          },
+          {
+            "Name": "prev_week_sales",
+            "Type": "double"
+          },
+          {
+            "Name": "wow_units_growth_rate",
+            "Type": "double"
+          },
+          {
+            "Name": "first_8wk_units",
+            "Type": "bigint"
+          },
+          {
+            "Name": "first_8wk_sales",
+            "Type": "double"
+          },
+          {
+            "Name": "first_8wk_customers",
+            "Type": "bigint"
+          },
+          {
+            "Name": "is_trending_8wk",
+            "Type": "int"
+          }
+        ],
+        "Location": "s3://novelty-margin-lakehouse-672350744457/staging/new_product_trend/features/",
+        "InputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat",
+        "OutputFormat": "org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat",
+        "Compressed": false,
+        "NumberOfBuckets": 0,
+        "SerdeInfo": {
+          "SerializationLibrary": "org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"
+        },
+        "SortColumns": [],
+        "StoredAsSubDirectories": false
+      },
+      "TableType": "EXTERNAL_TABLE",
+      "Parameters": {
+        "EXTERNAL": "TRUE",
+        "classification": "parquet"
+      },
+      "CreatedBy": "arn:aws:iam::672350744457:root",
+      "IsRegisteredWithLakeFormation": false,
+      "CatalogId": "672350744457",
+      "VersionId": "0",
+      "IsMultiDialectView": false,
+      "IsMaterializedView": false
+    },
+    {
+      "Name": "trend_thresholds_reference",
+      "DatabaseName": "reference_new_product_trend",
+      "Description": "Reference business configuration for minimum first-8-week unit threshold.",
+      "CreateTime": "2026-10-13T10:25:55+00:00",
+      "UpdateTime": "2026-10-13T10:25:55+00:00",
+      "Retention": 0,
+      "StorageDescriptor": {
+        "Columns": [
+          {
+            "Name": "product_category",
+            "Type": "string"
+          },
+          {
+            "Name": "min_8week_units",
+            "Type": "bigint"
+          }
+        ],
+        "Location": "s3://novelty-margin-lakehouse-672350744457/reference/staged-validation/config/trend_thresholds/",
+        "InputFormat": "org.apache.hadoop.mapred.TextInputFormat",
+        "OutputFormat": "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat",
+        "Compressed": false,
+        "NumberOfBuckets": 0,
+        "SerdeInfo": {
+          "SerializationLibrary": "org.apache.hadoop.hive.serde2.OpenCSVSerde",
+          "Parameters": {
+            "separatorChar": ",",
+            "quoteChar": "\"",
+            "escapeChar": "\\"
+          }
+        },
+        "SortColumns": [],
+        "StoredAsSubDirectories": false
+      },
+      "TableType": "EXTERNAL_TABLE",
+      "Parameters": {
+        "EXTERNAL": "TRUE",
+        "classification": "csv",
+        "skip.header.line.count": "1"
+      },
+      "CreatedBy": "arn:aws:iam::672350744457:root",
+      "IsRegisteredWithLakeFormation": false,
+      "CatalogId": "672350744457",
+      "VersionId": "0",
+      "IsMultiDialectView": false,
+      "IsMaterializedView": false
+    }
+  ]
+}

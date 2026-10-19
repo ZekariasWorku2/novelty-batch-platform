@@ -1,0 +1,108 @@
+[
+  {
+    "name": "new-product-trend-dag-validate",
+    "arn": "arn:aws:codebuild:us-east-1:672350744457:project/new-product-trend-dag-validate",
+    "description": "New Product Trend MWAA DAG CI/CD",
+    "source": {
+      "type": "CODEPIPELINE",
+      "buildspec": "cicd/buildspec-dag-validate.yml",
+      "insecureSsl": false
+    },
+    "artifacts": {
+      "type": "CODEPIPELINE",
+      "name": "new-product-trend-dag-validate",
+      "packaging": "NONE",
+      "encryptionDisabled": false
+    },
+    "cache": {
+      "type": "NO_CACHE"
+    },
+    "environment": {
+      "type": "LINUX_CONTAINER",
+      "image": "aws/codebuild/standard:8.0",
+      "computeType": "BUILD_GENERAL1_SMALL",
+      "environmentVariables": [],
+      "privilegedMode": false,
+      "imagePullCredentialsType": "CODEBUILD"
+    },
+    "serviceRole": "arn:aws:iam::672350744457:role/NewProductTrendCodeBuildRole",
+    "timeoutInMinutes": 10,
+    "queuedTimeoutInMinutes": 30,
+    "encryptionKey": "arn:aws:kms:us-east-1:672350744457:alias/aws/s3",
+    "tags": [
+      {
+        "key": "Project",
+        "value": "new-product-trend"
+      },
+      {
+        "key": "Purpose",
+        "value": "MWAA DAG CI/CD"
+      }
+    ],
+    "created": "2026-10-16T12:15:41.904000+00:00",
+    "lastModified": "2026-10-16T12:15:41.904000+00:00",
+    "badge": {
+      "badgeEnabled": false
+    },
+    "logsConfig": {
+      "cloudWatchLogs": {
+        "status": "ENABLED",
+        "groupName": "/aws/codebuild/new-product-trend-dag-validate"
+      }
+    },
+    "projectVisibility": "PRIVATE"
+  },
+  {
+    "name": "new-product-trend-dag-deploy",
+    "arn": "arn:aws:codebuild:us-east-1:672350744457:project/new-product-trend-dag-deploy",
+    "description": "New Product Trend MWAA DAG CI/CD",
+    "source": {
+      "type": "CODEPIPELINE",
+      "buildspec": "cicd/buildspec-dag-deploy.yml",
+      "insecureSsl": false
+    },
+    "artifacts": {
+      "type": "CODEPIPELINE",
+      "name": "new-product-trend-dag-deploy",
+      "packaging": "NONE",
+      "encryptionDisabled": false
+    },
+    "cache": {
+      "type": "NO_CACHE"
+    },
+    "environment": {
+      "type": "LINUX_CONTAINER",
+      "image": "aws/codebuild/standard:8.0",
+      "computeType": "BUILD_GENERAL1_SMALL",
+      "environmentVariables": [],
+      "privilegedMode": false,
+      "imagePullCredentialsType": "CODEBUILD"
+    },
+    "serviceRole": "arn:aws:iam::672350744457:role/NewProductTrendCodeBuildRole",
+    "timeoutInMinutes": 10,
+    "queuedTimeoutInMinutes": 30,
+    "encryptionKey": "arn:aws:kms:us-east-1:672350744457:alias/aws/s3",
+    "tags": [
+      {
+        "key": "Project",
+        "value": "new-product-trend"
+      },
+      {
+        "key": "Purpose",
+        "value": "MWAA DAG CI/CD"
+      }
+    ],
+    "created": "2026-10-16T12:15:42.637000+00:00",
+    "lastModified": "2026-10-16T12:15:42.637000+00:00",
+    "badge": {
+      "badgeEnabled": false
+    },
+    "logsConfig": {
+      "cloudWatchLogs": {
+        "status": "ENABLED",
+        "groupName": "/aws/codebuild/new-product-trend-dag-deploy"
+      }
+    },
+    "projectVisibility": "PRIVATE"
+  }
+]

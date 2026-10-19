@@ -1,0 +1,374 @@
+{
+  "vpc_id": "vpc-0d0dc20440ede602f",
+  "subnets": [
+    {
+      "AvailabilityZoneId": "use1-az2",
+      "MapCustomerOwnedIpOnLaunch": false,
+      "OwnerId": "672350744457",
+      "AssignIpv6AddressOnCreation": false,
+      "Ipv6CidrBlockAssociationSet": [],
+      "Tags": [
+        {
+          "Key": "Project",
+          "Value": "new-product-trend"
+        },
+        {
+          "Key": "Name",
+          "Value": "new-product-trend-mwaa-private-b"
+        },
+        {
+          "Key": "Tier",
+          "Value": "private"
+        }
+      ],
+      "SubnetArn": "arn:aws:ec2:us-east-1:672350744457:subnet/subnet-09d7c064734975724",
+      "EnableDns64": false,
+      "Ipv6Native": false,
+      "PrivateDnsNameOptionsOnLaunch": {
+        "HostnameType": "ip-name",
+        "EnableResourceNameDnsARecord": false,
+        "EnableResourceNameDnsAAAARecord": false
+      },
+      "BlockPublicAccessStates": {
+        "InternetGatewayBlockMode": "off"
+      },
+      "SubnetId": "subnet-09d7c064734975724",
+      "State": "available",
+      "VpcId": "vpc-0d0dc20440ede602f",
+      "CidrBlock": "10.20.11.0/24",
+      "AvailableIpAddressCount": 251,
+      "AvailabilityZone": "us-east-1b",
+      "DefaultForAz": false,
+      "MapPublicIpOnLaunch": false
+    },
+    {
+      "AvailabilityZoneId": "use1-az2",
+      "MapCustomerOwnedIpOnLaunch": false,
+      "OwnerId": "672350744457",
+      "AssignIpv6AddressOnCreation": false,
+      "Ipv6CidrBlockAssociationSet": [],
+      "Tags": [
+        {
+          "Key": "Project",
+          "Value": "new-product-trend"
+        },
+        {
+          "Key": "Name",
+          "Value": "new-product-trend-mwaa-public-b"
+        },
+        {
+          "Key": "Tier",
+          "Value": "public"
+        }
+      ],
+      "SubnetArn": "arn:aws:ec2:us-east-1:672350744457:subnet/subnet-08b43c1f661f34a5e",
+      "EnableDns64": false,
+      "Ipv6Native": false,
+      "PrivateDnsNameOptionsOnLaunch": {
+        "HostnameType": "ip-name",
+        "EnableResourceNameDnsARecord": false,
+        "EnableResourceNameDnsAAAARecord": false
+      },
+      "BlockPublicAccessStates": {
+        "InternetGatewayBlockMode": "off"
+      },
+      "SubnetId": "subnet-08b43c1f661f34a5e",
+      "State": "available",
+      "VpcId": "vpc-0d0dc20440ede602f",
+      "CidrBlock": "10.20.1.0/24",
+      "AvailableIpAddressCount": 251,
+      "AvailabilityZone": "us-east-1b",
+      "DefaultForAz": false,
+      "MapPublicIpOnLaunch": true
+    },
+    {
+      "AvailabilityZoneId": "use1-az1",
+      "MapCustomerOwnedIpOnLaunch": false,
+      "OwnerId": "672350744457",
+      "AssignIpv6AddressOnCreation": false,
+      "Ipv6CidrBlockAssociationSet": [],
+      "Tags": [
+        {
+          "Key": "Name",
+          "Value": "new-product-trend-mwaa-private-a"
+        },
+        {
+          "Key": "Project",
+          "Value": "new-product-trend"
+        },
+        {
+          "Key": "Tier",
+          "Value": "private"
+        }
+      ],
+      "SubnetArn": "arn:aws:ec2:us-east-1:672350744457:subnet/subnet-0173f0d56db55ca14",
+      "EnableDns64": false,
+      "Ipv6Native": false,
+      "PrivateDnsNameOptionsOnLaunch": {
+        "HostnameType": "ip-name",
+        "EnableResourceNameDnsARecord": false,
+        "EnableResourceNameDnsAAAARecord": false
+      },
+      "BlockPublicAccessStates": {
+        "InternetGatewayBlockMode": "off"
+      },
+      "SubnetId": "subnet-0173f0d56db55ca14",
+      "State": "available",
+      "VpcId": "vpc-0d0dc20440ede602f",
+      "CidrBlock": "10.20.10.0/24",
+      "AvailableIpAddressCount": 251,
+      "AvailabilityZone": "us-east-1a",
+      "DefaultForAz": false,
+      "MapPublicIpOnLaunch": false
+    },
+    {
+      "AvailabilityZoneId": "use1-az1",
+      "MapCustomerOwnedIpOnLaunch": false,
+      "OwnerId": "672350744457",
+      "AssignIpv6AddressOnCreation": false,
+      "Ipv6CidrBlockAssociationSet": [],
+      "Tags": [
+        {
+          "Key": "Tier",
+          "Value": "public"
+        },
+        {
+          "Key": "Name",
+          "Value": "new-product-trend-mwaa-public-a"
+        },
+        {
+          "Key": "Project",
+          "Value": "new-product-trend"
+        }
+      ],
+      "SubnetArn": "arn:aws:ec2:us-east-1:672350744457:subnet/subnet-0d0a795cc7e255001",
+      "EnableDns64": false,
+      "Ipv6Native": false,
+      "PrivateDnsNameOptionsOnLaunch": {
+        "HostnameType": "ip-name",
+        "EnableResourceNameDnsARecord": false,
+        "EnableResourceNameDnsAAAARecord": false
+      },
+      "BlockPublicAccessStates": {
+        "InternetGatewayBlockMode": "off"
+      },
+      "SubnetId": "subnet-0d0a795cc7e255001",
+      "State": "available",
+      "VpcId": "vpc-0d0dc20440ede602f",
+      "CidrBlock": "10.20.0.0/24",
+      "AvailableIpAddressCount": 251,
+      "AvailabilityZone": "us-east-1a",
+      "DefaultForAz": false,
+      "MapPublicIpOnLaunch": true
+    }
+  ],
+  "routes": [
+    {
+      "Associations": [
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-0967827f7ffe95bc3",
+          "RouteTableId": "rtb-0d2e36be30ad197e5",
+          "SubnetId": "subnet-0173f0d56db55ca14",
+          "AssociationState": {
+            "State": "associated"
+          }
+        },
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-02868d801636af248",
+          "RouteTableId": "rtb-0d2e36be30ad197e5",
+          "SubnetId": "subnet-09d7c064734975724",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-0d2e36be30ad197e5",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.20.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        },
+        {
+          "DestinationCidrBlock": "0.0.0.0/0",
+          "NatGatewayId": "nat-07c6e535d51f9ee98",
+          "Origin": "CreateRoute",
+          "State": "blackhole"
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "Name",
+          "Value": "new-product-trend-mwaa-private-rt"
+        },
+        {
+          "Key": "Project",
+          "Value": "new-product-trend"
+        }
+      ],
+      "VpcId": "vpc-0d0dc20440ede602f",
+      "OwnerId": "672350744457"
+    },
+    {
+      "Associations": [
+        {
+          "Main": true,
+          "RouteTableAssociationId": "rtbassoc-03083fdabe4e89476",
+          "RouteTableId": "rtb-027b4a1d0947c3025",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-027b4a1d0947c3025",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.20.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        }
+      ],
+      "Tags": [],
+      "VpcId": "vpc-0d0dc20440ede602f",
+      "OwnerId": "672350744457"
+    },
+    {
+      "Associations": [
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-062e89467660bdedc",
+          "RouteTableId": "rtb-01813be4c86151d72",
+          "SubnetId": "subnet-08b43c1f661f34a5e",
+          "AssociationState": {
+            "State": "associated"
+          }
+        },
+        {
+          "Main": false,
+          "RouteTableAssociationId": "rtbassoc-0bd7f917febc95349",
+          "RouteTableId": "rtb-01813be4c86151d72",
+          "SubnetId": "subnet-0d0a795cc7e255001",
+          "AssociationState": {
+            "State": "associated"
+          }
+        }
+      ],
+      "PropagatingVgws": [],
+      "RouteTableId": "rtb-01813be4c86151d72",
+      "Routes": [
+        {
+          "DestinationCidrBlock": "10.20.0.0/16",
+          "GatewayId": "local",
+          "Origin": "CreateRouteTable",
+          "State": "active"
+        },
+        {
+          "DestinationCidrBlock": "0.0.0.0/0",
+          "GatewayId": "igw-0b95e0894e89c6206",
+          "Origin": "CreateRoute",
+          "State": "active"
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "Project",
+          "Value": "new-product-trend"
+        },
+        {
+          "Key": "Name",
+          "Value": "new-product-trend-mwaa-public-rt"
+        }
+      ],
+      "VpcId": "vpc-0d0dc20440ede602f",
+      "OwnerId": "672350744457"
+    }
+  ],
+  "security_groups": [
+    {
+      "GroupId": "sg-0585bcf31ea22f166",
+      "IpPermissionsEgress": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [],
+          "IpRanges": [
+            {
+              "CidrIp": "0.0.0.0/0"
+            }
+          ],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ],
+      "Tags": [
+        {
+          "Key": "Name",
+          "Value": "new-product-trend-mwaa-sg"
+        },
+        {
+          "Key": "Project",
+          "Value": "new-product-trend"
+        }
+      ],
+      "VpcId": "vpc-0d0dc20440ede602f",
+      "SecurityGroupArn": "arn:aws:ec2:us-east-1:672350744457:security-group/sg-0585bcf31ea22f166",
+      "OwnerId": "672350744457",
+      "GroupName": "new-product-trend-mwaa-sg",
+      "Description": "MWAA security group for New Product Trend study environment",
+      "IpPermissions": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [
+            {
+              "UserId": "672350744457",
+              "GroupId": "sg-0585bcf31ea22f166"
+            }
+          ],
+          "IpRanges": [],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    },
+    {
+      "GroupId": "sg-0571a05c76b672637",
+      "IpPermissionsEgress": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [],
+          "IpRanges": [
+            {
+              "CidrIp": "0.0.0.0/0"
+            }
+          ],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ],
+      "VpcId": "vpc-0d0dc20440ede602f",
+      "SecurityGroupArn": "arn:aws:ec2:us-east-1:672350744457:security-group/sg-0571a05c76b672637",
+      "OwnerId": "672350744457",
+      "GroupName": "default",
+      "Description": "default VPC security group",
+      "IpPermissions": [
+        {
+          "IpProtocol": "-1",
+          "UserIdGroupPairs": [
+            {
+              "UserId": "672350744457",
+              "GroupId": "sg-0571a05c76b672637"
+            }
+          ],
+          "IpRanges": [],
+          "Ipv6Ranges": [],
+          "PrefixListIds": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "name": "new-product-trend-mwaa-dag-pipeline",
+  "roleArn": "arn:aws:iam::672350744457:role/NewProductTrendCodePipelineRole",
+  "artifactStore": {
+    "type": "S3",
+    "location": "novelty-margin-lakehouse-672350744457"
+  },
+  "stages": [
+    {
+      "name": "Source",
+      "actions": [
+        {
+          "name": "SourceFromGitHub",
+          "actionTypeId": {
+            "category": "Source",
+            "owner": "AWS",
+            "provider": "CodeStarSourceConnection",
+            "version": "1"
+          },
+          "runOrder": 1,
+          "configuration": {
+            "BranchName": "mwaa-production-study",
+            "ConnectionArn": "arn:aws:codeconnections:us-east-1:672350744457:connection/8690f980-f7a4-4aa6-b345-8f888ef008bc",
+            "DetectChanges": "false",
+            "FullRepositoryId": "ZekariasWorku2/novelty-batch-platform",
+            "OutputArtifactFormat": "CODE_ZIP"
+          },
+          "outputArtifacts": [
+            {
+              "name": "SourceOutput"
+            }
+          ],
+          "inputArtifacts": []
+        }
+      ]
+    },
+    {
+      "name": "Validate",
+      "actions": [
+        {
+          "name": "ValidateDag",
+          "actionTypeId": {
+            "category": "Build",
+            "owner": "AWS",
+            "provider": "CodeBuild",
+            "version": "1"
+          },
+          "runOrder": 1,
+          "configuration": {
+            "ProjectName": "new-product-trend-dag-validate"
+          },
+          "outputArtifacts": [
+            {
+              "name": "ValidatedOutput"
+            }
+          ],
+          "inputArtifacts": [
+            {
+              "name": "SourceOutput"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Deploy",
+      "actions": [
+        {
+          "name": "DeployDagToS3",
+          "actionTypeId": {
+            "category": "Build",
+            "owner": "AWS",
+            "provider": "CodeBuild",
+            "version": "1"
+          },
+          "runOrder": 1,
+          "configuration": {
+            "ProjectName": "new-product-trend-dag-deploy"
+          },
+          "outputArtifacts": [],
+          "inputArtifacts": [
+            {
+              "name": "ValidatedOutput"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "version": 1,
+  "executionMode": "SUPERSEDED",
+  "pipelineType": "V1"
+}
