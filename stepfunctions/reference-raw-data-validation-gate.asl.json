@@ -1,0 +1,48 @@
+{
+  "Comment": "Reference raw-data validation gate. This state machine has no schedule or automatic trigger.",
+  "StartAt": "RunRawDataValidation",
+  "States": {
+    "RunRawDataValidation": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "reference-raw-data-validation",
+        "Arguments": {
+          "--raw_bucket.$": "$.raw_bucket",
+          "--processing_week_start.$": "$.processing_week_start",
+          "--processing_week_end.$": "$.processing_week_end",
+          "--manifest_key.$": "$.manifest_key"
+        }
+      },
+      "ResultPath": "$.validation_job",
+      "Next": "RawValidationPassed",
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "ResultPath": "$.validation_error",
+          "Next": "NotifyValidationFailure"
+        }
+      ]
+    },
+    "NotifyValidationFailure": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "arn:aws:sns:us-east-1:672350744457:reference-raw-validation-failures",
+        "Subject": "Raw data validation failed",
+        "Message.$": "States.JsonToString($)"
+      },
+      "Next": "RawValidationFailed"
+    },
+    "RawValidationFailed": {
+      "Type": "Fail",
+      "Error": "RawDataValidationFailed",
+      "Cause": "Raw data did not pass the validation gate."
+    },
+    "RawValidationPassed": {
+      "Type": "Succeed"
+    }
+  }
+}

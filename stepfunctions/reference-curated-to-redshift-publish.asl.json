@@ -1,0 +1,74 @@
+{
+  "Comment": "Reference curated S3 -> Redshift publish -> post-load smoke validation. No schedule or automatic trigger.",
+  "StartAt": "LoadCuratedToRedshift",
+  "States": {
+    "LoadCuratedToRedshift": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "reference-curated-to-redshift-load",
+        "Arguments": {
+          "--bucket.$": "$.bucket",
+          "--processing_week_end.$": "$.processing_week_end",
+          "--redshift_database.$": "$.redshift_database",
+          "--redshift_workgroup_name.$": "$.redshift_workgroup_name",
+          "--redshift_iam_role_arn.$": "$.redshift_iam_role_arn"
+        }
+      },
+      "ResultPath": "$.redshift_load",
+      "Next": "RunPostLoadSmokeValidation",
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "ResultPath": "$.load_error",
+          "Next": "NotifyFailure"
+        }
+      ]
+    },
+    "RunPostLoadSmokeValidation": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "reference-redshift-postload-smoke-validation",
+        "Arguments": {
+          "--bucket.$": "$.bucket",
+          "--processing_week_end.$": "$.processing_week_end",
+          "--redshift_database.$": "$.redshift_database",
+          "--redshift_table": "product_trends.trend_features",
+          "--redshift_workgroup_name.$": "$.redshift_workgroup_name"
+        }
+      },
+      "ResultPath": "$.smoke_validation",
+      "Next": "PublishedAndValidated",
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "ResultPath": "$.smoke_error",
+          "Next": "NotifyFailure"
+        }
+      ]
+    },
+    "PublishedAndValidated": {
+      "Type": "Succeed"
+    },
+    "NotifyFailure": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "arn:aws:sns:us-east-1:672350744457:reference-redshift-smoke-validation-failures",
+        "Subject": "Curated-to-Redshift publish failed",
+        "Message.$": "States.JsonToString($)"
+      },
+      "Next": "PipelineFailed"
+    },
+    "PipelineFailed": {
+      "Type": "Fail",
+      "Error": "CuratedToRedshiftPublishFailed",
+      "Cause": "Redshift load or post-load smoke validation failed."
+    }
+  }
+}

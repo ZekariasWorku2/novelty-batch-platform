@@ -1,0 +1,64 @@
+{
+  "Comment": "Reference Redshift post-load smoke-validation gate. No schedule or automatic trigger.",
+  "StartAt": "LoadCompletedSuccessfully",
+  "States": {
+    "LoadCompletedSuccessfully": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.load_status",
+          "StringEquals": "SUCCEEDED",
+          "Next": "RunPostLoadSmokeValidation"
+        }
+      ],
+      "Default": "LoadDidNotCompleteSuccessfully"
+    },
+    "RunPostLoadSmokeValidation": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "reference-redshift-postload-smoke-validation",
+        "Arguments": {
+          "--bucket.$": "$.bucket",
+          "--processing_week_end.$": "$.processing_week_end",
+          "--redshift_database.$": "$.redshift_database",
+          "--redshift_table.$": "$.redshift_table",
+          "--redshift_workgroup_name.$": "$.redshift_workgroup_name"
+        }
+      },
+      "ResultPath": "$.smoke_validation",
+      "Next": "SmokeValidationPassed",
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "ResultPath": "$.smoke_error",
+          "Next": "NotifyFailure"
+        }
+      ]
+    },
+    "SmokeValidationPassed": {
+      "Type": "Succeed"
+    },
+    "LoadDidNotCompleteSuccessfully": {
+      "Type": "Pass",
+      "Next": "NotifyFailure"
+    },
+    "NotifyFailure": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "arn:aws:sns:us-east-1:672350744457:reference-redshift-smoke-validation-failures",
+        "Subject": "Redshift post-load smoke validation failed",
+        "Message.$": "States.JsonToString($)"
+      },
+      "Next": "PipelineFailed"
+    },
+    "PipelineFailed": {
+      "Type": "Fail",
+      "Error": "RedshiftPostLoadSmokeValidationFailed",
+      "Cause": "Redshift load failed or post-load smoke validation did not pass."
+    }
+  }
+}

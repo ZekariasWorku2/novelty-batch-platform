@@ -1,0 +1,6 @@
+{
+  "reference-raw-data-validation-gate": "arn:aws:iam::672350744457:role/ReferenceRawValidationStepFunctionsRole",
+  "reference-staged-data-validation-gate": "arn:aws:iam::672350744457:role/ReferenceStagedValidationStepFunctionsRole",
+  "reference-curated-to-redshift-publish": "arn:aws:iam::672350744457:role/ReferenceRedshiftPublishStepFunctionsRole",
+  "reference-redshift-postload-smoke-validation-gate": "arn:aws:iam::672350744457:role/ReferenceRedshiftSmokeValidationStepFunctionsRole"
+}

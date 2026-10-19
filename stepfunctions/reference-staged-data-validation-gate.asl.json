@@ -1,0 +1,78 @@
+{
+  "Comment": "Reference comprehensive staged validation gate. No schedule or automatic trigger.",
+  "StartAt": "ComprehensiveStagedValidation",
+  "States": {
+    "ComprehensiveStagedValidation": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "reference-staged-data-validation",
+        "Arguments": {
+          "--bucket.$": "$.bucket",
+          "--staging_prefix.$": "$.staging_prefix",
+          "--processing_week_end.$": "$.processing_week_end"
+        }
+      },
+      "ResultPath": "$.validation",
+      "Next": "ValidationPassed",
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "ResultPath": "$.validation_error",
+          "Next": "LeaveStagedDataForInvestigation"
+        }
+      ]
+    },
+    "ValidationPassed": {
+      "Type": "Pass",
+      "Next": "PromoteValidatedData"
+    },
+    "PromoteValidatedData": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "reference-promote-staged-data",
+        "Arguments": {
+          "--bucket.$": "$.bucket",
+          "--staging_prefix.$": "$.staging_prefix",
+          "--curated_prefix.$": "$.curated_prefix"
+        }
+      },
+      "ResultPath": "$.promotion",
+      "Next": "TrustedCuratedDataReady",
+      "Catch": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "ResultPath": "$.promotion_error",
+          "Next": "NotifyFailure"
+        }
+      ]
+    },
+    "TrustedCuratedDataReady": {
+      "Type": "Succeed"
+    },
+    "LeaveStagedDataForInvestigation": {
+      "Type": "Pass",
+      "Next": "NotifyFailure"
+    },
+    "NotifyFailure": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "arn:aws:sns:us-east-1:672350744457:reference-staged-validation-failures",
+        "Subject": "Staged data validation failed",
+        "Message.$": "States.JsonToString($)"
+      },
+      "Next": "PipelineFailed"
+    },
+    "PipelineFailed": {
+      "Type": "Fail",
+      "Error": "StagedDataValidationFailed",
+      "Cause": "Staged data failed validation or promotion."
+    }
+  }
+}
