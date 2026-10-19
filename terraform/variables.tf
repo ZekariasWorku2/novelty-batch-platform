@@ -14,6 +14,19 @@ variable "lake_bucket_name" {
   type    = string
   default = "novelty-margin-lakehouse-672350744457"
 }
+variable "manage_existing_bucket" {
+  description = "Existing versioned project bucket. Import before enabling."
+  type        = bool
+  default     = false
+}
+variable "redshift_subnet_ids" {
+  type    = list(string)
+  default = ["subnet-0173f0d56db55ca14", "subnet-09d7c064734975724"]
+}
+variable "redshift_security_group_ids" {
+  type    = list(string)
+  default = ["sg-0585bcf31ea22f166"]
+}
 variable "manage_existing_iam" {
   description = "Import existing IAM roles/policies to state before enabling."
   type        = bool
@@ -100,7 +113,7 @@ variable "github_owner" {
 }
 variable "github_repo" {
   type    = string
-  default = "novelty-batch-platform"
+  default = "new-product-trend-data-platform"
 }
 variable "github_branch" {
   type    = string

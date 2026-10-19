@@ -4,7 +4,7 @@ resource "aws_glue_job" "pipeline" {
   for_each          = var.manage_glue_jobs ? local.recovered_jobs : {}
   name              = each.key
   description       = each.value.Description
-  role_arn          = each.value.Role
+  role_arn          = each.key == "reference-raw-ingest" ? aws_iam_role.missing_glue["ReferenceRawIngestGlueRole"].arn : each.key == "reference-transform-to-staging" ? aws_iam_role.missing_glue["ReferenceTransformToStagingGlueRole"].arn : each.value.Role
   glue_version      = each.value.GlueVersion
   worker_type       = try(each.value.WorkerType, null)
   number_of_workers = try(each.value.NumberOfWorkers, null)
