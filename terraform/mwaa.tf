@@ -18,11 +18,26 @@ resource "aws_mwaa_environment" "weekly" {
     security_group_ids = [var.mwaa_security_group_id]
   }
   logging_configuration {
-    dag_processing_logs { enabled = true, log_level = "INFO" }
-    scheduler_logs { enabled = true, log_level = "INFO" }
-    task_logs { enabled = true, log_level = "INFO" }
-    webserver_logs { enabled = true, log_level = "INFO" }
-    worker_logs { enabled = true, log_level = "INFO" }
+    dag_processing_logs {
+      enabled   = true
+      log_level = "INFO"
+    }
+    scheduler_logs {
+      enabled   = true
+      log_level = "INFO"
+    }
+    task_logs {
+      enabled   = true
+      log_level = "INFO"
+    }
+    webserver_logs {
+      enabled   = true
+      log_level = "INFO"
+    }
+    worker_logs {
+      enabled   = true
+      log_level = "INFO"
+    }
   }
   airflow_configuration_options = {
     "core.load_examples" = "False"

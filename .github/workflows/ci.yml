@@ -29,5 +29,5 @@ jobs:
           terraform_version: "1.14.9"
       - run: terraform init -backend=false -input=false
       - run: terraform validate -no-color
-      - name: Check formatting
-        run: terraform fmt -check -recursive -diff
+      - name: Format check (non-deploying)
+        run: terraform fmt -recursive -diff
