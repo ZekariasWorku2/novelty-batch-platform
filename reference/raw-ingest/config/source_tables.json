@@ -1,0 +1,33 @@
+{
+  "_note": "NEW ASSUMPTION: SQL Server WideWorldImporters-style schema. Validate each SELECT and column alias with a DBA before enabling. Never store credentials here.",
+  "tables": {
+    "invoice_lines": {
+      "date_column": "invoice_date",
+      "query": "SELECT il.InvoiceLineID AS invoice_line_id, il.InvoiceID AS invoice_id, i.InvoiceDate AS invoice_date, il.StockItemID AS stock_item_id, il.Quantity AS quantity, il.UnitPrice AS unit_price, il.TaxRate AS tax_rate, il.TaxAmount AS tax_amount, il.LineProfit AS line_profit, il.ExtendedPrice AS extended_price, il.LastEditedWhen AS last_edited_when FROM Sales.InvoiceLines il INNER JOIN Sales.Invoices i ON il.InvoiceID = i.InvoiceID WHERE i.InvoiceDate >= '{week_start}' AND i.InvoiceDate < '{week_end}'"
+    },
+    "invoices": {
+      "date_column": "invoice_date",
+      "query": "SELECT InvoiceID AS invoice_id, CustomerID AS customer_id, BillToCustomerID AS bill_to_customer_id, OrderID AS order_id, InvoiceDate AS invoice_date, IsCreditNote AS is_credit_note, LastEditedWhen AS last_edited_when FROM Sales.Invoices WHERE InvoiceDate >= '{week_start}' AND InvoiceDate < '{week_end}'"
+    },
+    "products": {
+      "date_column": null,
+      "query": "SELECT i.StockItemID AS stock_item_id, i.StockItemName AS stock_item_name, i.SupplierID AS supplier_id, i.Brand AS brand, i.Size AS size, i.LeadTimeDays AS lead_time_days, i.QuantityPerOuter AS quantity_per_outer, i.IsChillerStock AS is_chiller_stock, i.UnitPrice AS unit_price, i.RecommendedRetailPrice AS recommended_retail_price, h.QuantityOnHand AS quantity_on_hand, h.ReorderLevel AS reorder_level, h.TargetStockLevel AS target_stock_level FROM Warehouse.StockItems i LEFT JOIN Warehouse.StockItemHoldings h ON i.StockItemID = h.StockItemID"
+    },
+    "product_categories": {
+      "date_column": null,
+      "query": "SELECT ssg.StockItemID AS stock_item_id, ssg.StockGroupID AS stock_group_id, g.StockGroupName AS stock_group_name FROM Warehouse.StockItemStockGroups ssg JOIN Warehouse.StockGroups g ON ssg.StockGroupID = g.StockGroupID"
+    },
+    "suppliers": {
+      "date_column": null,
+      "query": "SELECT SupplierID AS supplier_id, SupplierName AS supplier_name FROM Purchasing.Suppliers"
+    },
+    "purchase_orders": {
+      "date_column": "order_date",
+      "query": "SELECT PurchaseOrderID AS purchase_order_id, SupplierID AS supplier_id, OrderDate AS order_date FROM Purchasing.PurchaseOrders WHERE OrderDate >= '{week_start}' AND OrderDate < '{week_end}'"
+    },
+    "purchase_order_lines": {
+      "date_column": "order_date",
+      "query": "SELECT pl.PurchaseOrderLineID AS purchase_order_line_id, pl.PurchaseOrderID AS purchase_order_id, po.SupplierID AS supplier_id, pl.StockItemID AS stock_item_id, po.OrderDate AS order_date FROM Purchasing.PurchaseOrderLines pl JOIN Purchasing.PurchaseOrders po ON po.PurchaseOrderID = pl.PurchaseOrderID WHERE po.OrderDate >= '{week_start}' AND po.OrderDate < '{week_end}'"
+    }
+  }
+}
